@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 using System.Windows;
 using Task2.Models;
 
@@ -10,11 +11,11 @@ public partial class DashboardWindow : Window
 
 	public List<Car>? Cars { get; set; }
 
-	SqlConnection? SqlConnection { get; set; }
+	public SqlConnection? SqlConnection { get; set; }
 
-	SqlDataReader? SqlDataReader { get; set; }
+	public SqlDataReader? SqlDataReader { get; set; }
 
-	SqlCommand? SqlCommand { get; set; }
+	public SqlCommand? SqlCommand { get; set; }
 
 	public string ConnectionString { get; set; }
 
@@ -26,10 +27,7 @@ public partial class DashboardWindow : Window
 
 		DataContext = this;
 
-		//	ConnectionString = App.Configuration!.GetConnectionString("DefaultConnection");
-		ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=AppCars;Integrated Security=SSPI;";
-		
-		SqlConnection = new(ConnectionString);
+		ConnectionString = App.Configuration!.GetConnectionString("DefaultConnection")!;
 
 		Cars = new();
 
@@ -41,9 +39,13 @@ public partial class DashboardWindow : Window
 		string searchedSpec =
 					((RadioBtnMarka.IsChecked!.Value) ? RadioBtnMarka.Content.ToString()! : RadioBtnModel.Content.ToString()!);
 
-		if (string.IsNullOrEmpty(searchedSpec)) return;
+		if (string.IsNullOrEmpty(searchedSpec))
+		{
+			MessageBox.Show("Please, enter a text.", "Message.");
+			return;
+		}
 
-		using (SqlConnection)
+		using (SqlConnection = new(ConnectionString))
 		{
 			SqlConnection!.Open();
 

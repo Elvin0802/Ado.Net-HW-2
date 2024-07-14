@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.IO;
 using System.Windows;
 using Task2.Views;
 
@@ -11,12 +12,12 @@ public partial class App : Application
 
 	private void StartApp(object sender, StartupEventArgs e)
 	{
-		DashboardWindow = new DashboardWindow();
-
 		Configuration = new ConfigurationBuilder()
-			.SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+			.SetBasePath(Directory.GetCurrentDirectory())
 			.AddJsonFile("appsettings.json")
 			.Build();
+
+		DashboardWindow = new DashboardWindow();
 
 		DashboardWindow.ShowDialog();
 	}

@@ -15,11 +15,14 @@
 
     <Grid>
 
-        <!--
-            StackPanel for applying good design.
-        -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
         <StackPanel VerticalAlignment="Center"
-					HorizontalAlignment="Center">
+					HorizontalAlignment="Center"
+                    Grid.Row="0">
 
             <!--
 				TextBox for writing search content. 
@@ -55,34 +58,31 @@
 
             </StackPanel>
 
+        </StackPanel>
+
             <!--
                 ListView for showing all or searched cars.
             -->
-            <StackPanel>
-
+            <ListView x:Name="ListOfCars"
+                 Margin="10"
+                 ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      Grid.Row="1">
                 
-                <ListView x:Name="ListOfCars"
-                          Margin="10"
-                          ScrollViewer.VerticalScrollBarVisibility="Visible">
-                    <ListView.View>
-                        
-                        <GridView>
-                            
-                            <GridViewColumn Header="Marka"
-                                            Width="200"
-                                            DisplayMemberBinding="{Binding Marka}"/>
-                            
-                            <GridViewColumn Header="Model"
-                                            Width="200"
-                                            DisplayMemberBinding="{Binding Model}"/>
-                            
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-               
-            </StackPanel>
+                <ListView.View>
 
-        </StackPanel>
+                    <GridView>
+
+                        <GridViewColumn Header="Marka"
+                                   Width="300"
+                                   DisplayMemberBinding="{Binding Marka}"/>
+
+                        <GridViewColumn Header="Model"
+                                   Width="300"
+                                   DisplayMemberBinding="{Binding Model}"/>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
     </Grid>
 </Window>
